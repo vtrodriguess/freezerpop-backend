@@ -22,6 +22,8 @@ import com.geladinho.dtos.LoginResponseDTO;
 import com.geladinho.entities.Customer;
 import com.geladinho.interfaces.ICustomerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("cliente")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -95,7 +97,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/cadastrar")
-	public CustomerDTO createCustomer(@RequestBody Customer customer) {
+	public CustomerDTO createCustomer(@Valid @RequestBody Customer customer) {
 		Customer create = iCustomerService.createCustomer(customer.getName(), customer.getEmail(),
 				customer.getPassword());
 
