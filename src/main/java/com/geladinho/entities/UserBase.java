@@ -4,6 +4,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
 public abstract class UserBase {
@@ -11,9 +13,17 @@ public abstract class UserBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
+	
+	@NotBlank(message = "O nome é obrigatório")
 	protected String name;
+	
+	@NotBlank(message = "O e-mail é obrigatório")
 	protected String email;
+	
+	@NotBlank(message = "A senha é obrigatória")
+	@Size(min = 8, message = "A senha deve ter pelo menos 6 caracteres")
 	protected String password;
+	 
 	protected String role;
 
 	public UserBase() {
