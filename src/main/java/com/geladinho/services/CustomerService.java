@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.geladinho.config.Token;
 import com.geladinho.entities.Customer;
@@ -51,12 +54,25 @@ public class CustomerService implements ICustomerService {
 
 	@Override
 	public Customer createCustomer(String name, String email, String senha) {
-		String pass = passwordEncoder.encode(senha);
-		Customer customer = new Customer(name, email, pass);
-	
-		customerRepository.save(customer);
+		 String pass = passwordEncoder.encode(senha);
+		    Customer customer = new Customer(name, email, pass);
 
-		return customer;
+		    try {
+		        return customerRepository.save(customer);
+		    } catch (DataIntegrityViolationException e) {
+		    	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "E-mail já cadastrado");
+		    }
+	}
+	
+	@Override
+	public void changePassword(String email, String senha) {
+		Optional<Customer> customer = customerRepository.findByEmail(email);
+		
+		if(customer.isPresent()) {
+			String pass = passwordEncoder.encode(senha);
+			customer.get().setPassword(pass);
+			customerRepository.save(customer.get());
+		}
 	}
 
 	@Override

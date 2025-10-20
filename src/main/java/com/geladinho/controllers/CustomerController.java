@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.geladinho.config.Token;
+import com.geladinho.dtos.ChangePasswordDTO;
 import com.geladinho.dtos.CustomerDTO;
 import com.geladinho.dtos.LoginResponseDTO;
 import com.geladinho.entities.Customer;
@@ -42,6 +43,11 @@ public class CustomerController {
 	@PutMapping("/att/{id}")
 	public void attBalance(@PathVariable Long id) {
 		iCustomerService.attBalance(id);
+	}
+	
+	@PutMapping("/troca-senha")
+	public void changePassword(@RequestBody ChangePasswordDTO dto) {
+		iCustomerService.changePassword(dto.getEmail(), dto.getNewPassword());
 	}
 	
 	@GetMapping("/clientes")

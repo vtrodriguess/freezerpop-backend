@@ -15,5 +15,6 @@ public interface ICustomerService {
 	Customer findByEmail(String email);
 	List<Customer> findAll();
 	void attBalance(Long id);
+	void changePassword(String email, String senha);
 
 }
