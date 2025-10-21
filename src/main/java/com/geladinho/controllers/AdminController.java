@@ -25,11 +25,12 @@ public class AdminController {
 
 	private AdminService admService;
 	private Token jwtUtil;
-
-	public AdminController(AdminService admService) {
-		this.admService = admService;
-	}
 	
+	public AdminController(AdminService admService, Token jwtUtil) {
+		this.admService = admService;
+		this.jwtUtil = jwtUtil;
+	}
+
 	@GetMapping("/all-geladinhos")
 	public ResponseEntity<List<FreezerPop>> findAll(@RequestHeader("Authorization") String authHeader){
 	    if(authHeader == null || !authHeader.startsWith("Bearer ")) {
