@@ -1,6 +1,7 @@
 package com.geladinho.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.geladinho.config.Token;
 import com.geladinho.entities.FreezerPop;
+import com.geladinho.repositories.FreezerPopRepository;
 import com.geladinho.services.FreezerPopService;
 
 @RestController
@@ -23,6 +25,7 @@ public class FreezerPopController {
 
 	private FreezerPopService freezerPopService;
 	private Token jwtUtil;
+	private FreezerPopRepository freezerPopRepository;
 	
 	public FreezerPopController(FreezerPopService freezerPopService, Token jwtUtil) {
 		this.freezerPopService = freezerPopService;
@@ -46,8 +49,13 @@ public class FreezerPopController {
 	    if(!jwtUtil.isValidToken(token)) { 
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
+	    
+	    List<FreezerPop> fzp = freezerPopService.findAll()
+	            .stream()
+	            .filter(x -> x.getQuantity() > 0)
+	            .collect(Collectors.toList());
 
-	    return ResponseEntity.ok(freezerPopService.findAll());
+	        return ResponseEntity.ok(fzp);
 	}
 	
 }
