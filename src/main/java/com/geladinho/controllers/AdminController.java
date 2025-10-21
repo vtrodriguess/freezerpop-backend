@@ -30,7 +30,7 @@ public class AdminController {
 		this.admService = admService;
 	}
 	
-	@GetMapping("/geladinhos")
+	@GetMapping("/all-geladinhos")
 	public ResponseEntity<List<FreezerPop>> findAll(@RequestHeader("Authorization") String authHeader){
 	    if(authHeader == null || !authHeader.startsWith("Bearer ")) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
