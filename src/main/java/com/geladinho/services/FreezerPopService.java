@@ -2,6 +2,7 @@ package com.geladinho.services;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,10 @@ public class FreezerPopService {
 	}
 	
 	public List<FreezerPop> findAll(){
-		return freezerPopRepository.findAll();
+		return freezerPopRepository.findAll()
+	            .stream()
+	            .filter(x -> x.getQuantity() > 0)
+	            .collect(Collectors.toList());
 	}
 	
 

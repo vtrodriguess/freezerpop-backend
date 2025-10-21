@@ -25,7 +25,6 @@ public class FreezerPopController {
 
 	private FreezerPopService freezerPopService;
 	private Token jwtUtil;
-	private FreezerPopRepository freezerPopRepository;
 	
 	public FreezerPopController(FreezerPopService freezerPopService, Token jwtUtil) {
 		this.freezerPopService = freezerPopService;
@@ -49,13 +48,8 @@ public class FreezerPopController {
 	    if(!jwtUtil.isValidToken(token)) { 
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
-	    
-	    List<FreezerPop> fzp = freezerPopService.findAll()
-	            .stream()
-	            .filter(x -> x.getQuantity() > 0)
-	            .collect(Collectors.toList());
 
-	        return ResponseEntity.ok(fzp);
+	        return ResponseEntity.ok(freezerPopService.findAll());
 	}
 	
 }

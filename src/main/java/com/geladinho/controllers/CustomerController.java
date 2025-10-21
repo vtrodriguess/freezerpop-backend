@@ -33,8 +33,6 @@ public class CustomerController {
 	private ICustomerService iCustomerService;
 	private Token jwtUtil;
 
-	
-
 	public CustomerController(ICustomerService iCustomerService, Token jwtUtil) {
 		this.iCustomerService = iCustomerService;
 		this.jwtUtil = jwtUtil;
