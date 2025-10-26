@@ -33,5 +33,9 @@ public class FreezerPopService {
 	            .collect(Collectors.toList());
 	}
 	
+	public void deleteFreezerPop(Long id) {
+		freezerPopRepository.deleteById(id);
+	}
+	
 
 }

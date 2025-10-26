@@ -35,7 +35,7 @@ public class Token {
 	}
 
 	public String extractEmail(String token) {
-		return extractAllClaims(token).get("email", String.class); // retorna o email
+		return extractAllClaims(token).get("email", String.class);
 	}
 
 	private Claims extractAllClaims(String token) {
